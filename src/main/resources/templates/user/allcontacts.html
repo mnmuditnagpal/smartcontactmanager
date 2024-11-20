@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  data-th-replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+>
+  <title>Profile</title>
+  <section id="content">
+    <div data-th-replace="~{user/sidebar::userSidebar}"></div>
+    <div class="w-[80%] overflow-hidden mx-auto mt-10 rounded-lg">
+      <div class="relative shadow-md sm:rounded-lg">
+        <div
+          class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+        >
+          <label class="sr-only">Search</label>
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="table-search-users"
+              class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search for users"
+            />
+          </div>
+        </div>
+
+        <!-- Table -->
+
+        <table
+          class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left">Name</th>
+              <th scope="col" class="px-6 py-3 text-center">Phone Number</th>
+              <th scope="col" class="px-6 py-3 text-center">Favorite</th>
+              <th scope="col" class="px-6 py-3 text-center">Social Media</th>
+              <th scope="col" class="px-6 py-3 text-center">Edit/Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-th-object="${contact}"
+              data-th-each="contact : ${contacts.getContent()}"
+              class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
+              <th
+                scope="row"
+                class="flex item-start px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                <img
+                  class="w-10 h-10 rounded-full"
+                  data-th-src="*{picture}"
+                  alt="Jese image"
+                />
+                <div class="ps-3">
+                <div class="flex justify-center items-center gap-2">
+                  <div
+                    class="text-base font-semibold"
+                    data-th-text="*{name}"
+                  ></div>
+                 <a data-th-href="@{'/user/contact-profile/'+ *{id} }" ><i class="text-blue-500 fa-regular fa-eye"></i></a>
+                </div>
+                  <div
+                    class="font-normal text-gray-500"
+                    data-th-text="*{email}"
+                  >
+                    mnmuditnagpal@gmail.com
+                  </div>
+                </div>
+              </th>
+              <td class="px-6 py-4" data-th-text="*{phoneNumber}">
+                7982414780
+              </td>
+              <td class="px-6 py-4 text-center">
+
+                <form data-th-action="@{'/user/mark-fav/'+ *{id}+'?pageno='+ ${contacts.number} }" method="post">
+                  <button type="submit">
+                    <i data-th-class="*{favourite} ? 'text-red-500 fa-solid fa-heart':'text-gray-400 fa-solid fa-heart'"></i>
+                  </button>
+                </form>
+              </td>
+              <td class="px-6 py-4">
+                <ul class="flex justify-center items-center gap-3">
+                  <li>
+                    <a
+                      href="#"
+                      target="_blank"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      ><i class="fa-brands fa-instagram"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      ><i class="fa-brands fa-facebook"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      ><i class="fa-brands fa-linkedin"></i
+                    ></a>
+                  </li>
+                </ul>
+              </td>
+              <td class="px-6 py-4">
+                <ul class="flex justify-center items-center">
+                  <li>
+                    <a
+                      href="#"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >Edit</a
+                    >
+                  </li>
+                  <li>/</li>
+                  <li>
+                    <button
+                      data-th-onclick="deleteContact([[${contact.id}]])"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >Delete</button
+                    >
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div data-th-unless="${contacts.getTotalElements()}" >
+          <h1
+          class="text-4xl m-4 p-4 text-center"
+          >No Contacts</h1>
+        </div>
+
+        <div data-th-if="${contacts.getTotalElements()}" class="pagination-container m-2 text-center p-2">
+          <nav aria-label="Page navigation example">
+            <ul class="inline-flex -space-x-px text-sm">
+<!--              previous button-->
+              <li data-th-unless="${contacts.first}">
+                <a
+                  data-th-href="@{'/user/all-contacts?page='+${contacts.number-1}}"
+                  class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >Previous</a
+                >
+              </li>
+<!--              Pages-->
+              <li
+                data-th-object="${number}"
+                data-th-each = "number : ${#numbers.sequence(0,contacts.totalPages-1)}"
+              >
+                <a
+                  data-th-href="@{'/user/all-contacts?page='+${number}}"
+                  data-th-classappend="${number==contacts.number?'bg-blue-700 text-white dark:bg-gray-500 dark:border-gray-400':'bg-white text-gray-500 dark:bg-gray-800 dark:text-gray-400'}"
+                  class="flex items-center justify-center px-3 h-8 leading-tight border border-gray-300"
+                  data-th-text="${number+1}"
+                  ></a
+                >
+              </li>
+<!--              Next Button-->
+              <li data-th-unless="${contacts.last}">
+                <a
+                        data-th-href="@{'/user/all-contacts?page='+${contacts.number+1}}"
+                  class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >Next</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div data-th-replace="~{user/profilemodal::profile-modal}" ></div>
+  <script data-th-src="@{/js/contactDelete.js}"></script>
+  <script></script>
+</html>

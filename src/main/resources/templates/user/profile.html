@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-th-replace="~{base::parent(~{::#content},~{::title},~{::script})}">
+  <title>Profile</title>
+  <section id="content">
+        <div data-th-replace="~{user/sidebar::userSidebar}"></div>
+        <div class="profile-page-container h-[7rem] w-full relative bg-[url('/Images/profilebg.png')]">
+          <img data-th-src="@{/Images/profile.png}" 
+          alt="profile-pic"
+          class="absolute w-44 h-44 left-1/2 -bottom-[10rem] transform -translate-x-1/2 -translate-y-1/2 rounded"
+          >
+        </div>
+        <main>
+          <div data-th-object="${loggedInUser}" class="w-[50%] m-auto p-6 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="mt-20 text-center">
+              <h1 class="text-4xl font-bold"
+              data-th-text="*{name}"
+              >Mudit Nagpal</h1>
+              <h3 data-th-text="*{email}"
+              >mnmuditnagpal@gmail.com</h3>
+              <div class="my-10">
+                <ul>
+                  <li class="flex flex-col justify-around gap-5 mb-6">
+                    <h2 class="text-2xl">Phone Number</h2>
+                    <h3 data-th-text="*{phoneNumber}">7982414780</h3>
+                  </li>
+                  <li class="flex flex-col justify-around gap-5">
+                    <h2 class="text-2xl">About Me</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis corporis tenetur deleniti delectus sunt enim iure maxime modi, vel itaque rerum labore explicabo molestiae omnis quos aliquam velit vero laboriosam!
+                      Exercitationem provident accusantium unde nobis dolore ad aperiam libero dolor laborum deserunt voluptate, est, vero sint qui itaque temporibus officia. Provident veritatis consectetur facere, necessitatibus architecto ea non nam minus!</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="flex mt-4 justify-center items-center gap-5 md:mt-6">
+              <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                 data-th-text="*{'Contacts : '+ totalContacts}"
+              >All Contacts : 10</a>
+              <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                 data-th-text="*{'Fav Contacts : '+favCount}"
+              >Fav Contacts : 2</a>
+          </div>
+          </div>
+        </main>
+  </section>
+  <script></script>
+</html>
